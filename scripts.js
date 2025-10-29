@@ -1,9 +1,13 @@
 const welcomePopupMessage = document.getElementById("welcome-prompt-container");
 // const namSubBtn = document.getElementById("nameSubBtn");
 const nameInputField = document.getElementById("welcome-prompt");
-const emojiOptions = { 1: "👊", 2: "", 3: "✌️" };
-let gameInfo = { username: "", win: 0, lose: 0, tie: 0 };
-let compPick = "rock-emoji";
+const emojiOptions = {
+  1: { name: "rock-emoji", symbol: "👊" },
+  2: { name: "paper-emoji", symbol: "🖐️" },
+  3: { name: "scissor-emoji", symbol: "✌️" },
+};
+let gameInfo = { username: null, win: 0, lose: 0, tie: 0 };
+let compPick = null;
 function getName() {
   if (localStorage.length === 0) {
     welcomePopupMessage.style.visibility = "visible";
@@ -39,7 +43,7 @@ function hidePopUp() {
 
 function pickEmoji() {
   const emojiNode = window.document.getElementsByClassName("emojiIcon");
-
+  getCompPick();
   for (const emoji of emojiNode) {
     emoji.addEventListener("click", () => {
       switch (emoji.id) {
@@ -48,7 +52,7 @@ function pickEmoji() {
             gameInfo.tie++;
             display_score();
             break;
-          } else if (compPick === "scissors-emoji") {
+          } else if (compPick === "scissor-emoji") {
             gameInfo.win++;
             display_score();
             break;
@@ -58,8 +62,8 @@ function pickEmoji() {
             break;
           }
 
-        case "scissors-emoji":
-          if (compPick === "scissors-emoji") {
+        case "scissor-emoji":
+          if (compPick === "scissor-emoji") {
             gameInfo.tie++;
             break;
           } else if (compPick === "paper-emoji") {
@@ -75,7 +79,7 @@ function pickEmoji() {
             gameInfo.tie++;
             display_score();
             break;
-          } else if (compPick === "scissors-emoji") {
+          } else if (compPick === "scissor-emoji") {
             gameInfo.win++;
             display_score();
             break;
@@ -95,6 +99,13 @@ function display_score() {
   console.log(
     `Wins: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`
   );
+}
+
+function getCompPick() {
+  const ranNum = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+  let newCompPick = emojiOptions[ranNum];
+  console.log(compPick);
+  compPick = newCompPick;
 }
 
 getName();
