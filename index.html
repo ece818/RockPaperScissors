@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play - Rock 👊 Paper 🖐️ Scissors✌️</title>
+    <link rel="stylesheet" href="style.css""
+</head>
+
+<body>
+    <div id="welcome-prompt-container">
+        <h1 id="welcome-prompt-text">Enter Name to Save Score</h1>
+        <input id="welcome-prompt" type="text"
+        placeholder="Enter your name to save your score"> <div id="Submit-name-button">
+            
+                    <button id="nameSubBtn" class="promptBtn" value="Username">Submit</button>
+             <button id="guestBtn"class="promptBtn" value="Guest">Play as Guest</button>
+
+        </div>
+</div>
+    <div class=" container">
+
+        <h1 id="welcomeTxt">Welcome! </h1>
+        <p id="optionTxt"> Please select an option below</p>
+        <div id="emojiContainer">
+            <button class="emojiIcon"id="rock-emoji" ><img src="imgs/rock-emoji.png" alt="rock"></button>
+            <button class="emojiIcon"id="paper-emoji"><img  src="imgs/paper-emoji.png" alt="paper"></button>
+
+            <button class="emojiIcon"id="scissors-emoji" ><img src="imgs/scissors-emoji.png" alt="scissors"></button>
+        </div>
+        <div class="results-container">
+            <h2 id="results-header">Results:</h1>
+                <div id="winResults">Win: 0 | Lose: 0 | Tie: 0</div>
+        </div>
+<script src="scripts.js"></script>
+        </body>
+
+</html>

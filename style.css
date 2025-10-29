@@ -1,0 +1,113 @@
+body {
+  background-color: black;
+  display: grid;
+  place-items: center;
+
+  margin: 0;
+
+  text-align: center;
+  color: white;
+}
+.promptBtn:hover {
+  background-color: rgb(140, 140, 140);
+}
+
+.promptBtn:active {
+  background-color: rgb(115, 115, 115);
+}
+
+#welcome-prompt-container button {
+  width: 10rem;
+  height: 3rem;
+  font-size: 1.3rem;
+  margin: 5px 20px;
+  padding: 10px 10px;
+  display: inline-block;
+}
+
+#welcome-prompt-container {
+  background-color: rgb(22, 22, 22);
+  color: white;
+  /* Center on the viewport */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* Make it visually distinct */
+  z-index: 1000;
+  padding: 21px 24px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* Layout for inner content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  visibility: hidden;
+  /* Optional sizing */
+  width: min(90%, 420px);
+}
+#welcome-prompt {
+  width: 70%;
+  max-width: 420px;
+  height: auto;
+  font-size: large;
+  text-align: center;
+  display: block;
+  position: static;
+  cursor: text;
+  margin: 0 auto 24px;
+}
+
+.container {
+  padding: 0%;
+}
+#welcomeTxt {
+  color: white;
+  font-size: 5rem;
+  padding-bottom: 10px;
+}
+#optionTxt {
+  color: white;
+  font-size: 3rem;
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 50px;
+}
+
+.emojiIcon {
+  display: inline-block;
+  width: 140px; /* reduced size so they sit closer */
+  height: 140px;
+  padding: 16px; /* no negative values */
+  margin: 12px; /* smaller gap between icons */
+  border-width: 0.5rem;
+  border-radius: 100%;
+  text-align: center;
+  border-color: white;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+.emojiIcon img {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  object-fit: contain;
+}
+.results-container {
+  margin-top: -8px; /* pull results up closer to the emojis (use margin, not padding) */
+  padding: 0;
+}
+
+#results-header {
+  font-size: 2.75rem;
+  margin: 0; /* remove invalid negative padding */
+}
+
+#winResults {
+  font-size: 2.25rem;
+  margin-top: 0.25rem; /* small gap under header */
+}
