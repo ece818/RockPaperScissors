@@ -24,6 +24,12 @@ body {
   padding: 10px 10px;
   display: inline-block;
 }
+.resultsEmoji {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  vertical-align: middle;
+}
 
 #welcome-prompt-container {
   background-color: rgb(22, 22, 22);

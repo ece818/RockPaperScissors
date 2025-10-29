@@ -1,10 +1,13 @@
 const welcomePopupMessage = document.getElementById("welcome-prompt-container");
 // const namSubBtn = document.getElementById("nameSubBtn");
+const winResults = document.getElementById("winResults");
 const nameInputField = document.getElementById("welcome-prompt");
+const welcomeName = document.getElementById("welcomeTxt");
+let userPick = null;
 const emojiOptions = {
   1: { name: "rock-emoji", symbol: "👊" },
   2: { name: "paper-emoji", symbol: "🖐️" },
-  3: { name: "scissor-emoji", symbol: "✌️" },
+  3: { name: "scissors-emoji", symbol: "✌️" },
 };
 let gameInfo = { username: null, win: 0, lose: 0, tie: 0 };
 let compPick = null;
@@ -34,25 +37,32 @@ function getName() {
     const savedData = JSON.parse(localStorage.getItem(lastUser));
     gameInfo = savedData;
     console.log("Loaded saved user:", gameInfo);
+    hidePopUp();
   }
 }
 
 function hidePopUp() {
   welcomePopupMessage.style.visibility = "hidden";
+  if (gameInfo.username.length >= 1) {
+    welcomeName.textContent = `Welcome ${gameInfo.username}`;
+  }
 }
 
 function pickEmoji() {
   const emojiNode = window.document.getElementsByClassName("emojiIcon");
-  getCompPick();
+
   for (const emoji of emojiNode) {
     emoji.addEventListener("click", () => {
+      getCompPick();
+      userPick = emoji.id;
+
       switch (emoji.id) {
         case "rock-emoji":
-          if (compPick === "rock-emoji") {
+          if (compPick.name === "rock-emoji") {
             gameInfo.tie++;
             display_score();
             break;
-          } else if (compPick === "scissor-emoji") {
+          } else if (compPick.name === "scissors-emoji") {
             gameInfo.win++;
             display_score();
             break;
@@ -62,29 +72,36 @@ function pickEmoji() {
             break;
           }
 
-        case "scissor-emoji":
-          if (compPick === "scissor-emoji") {
+        case "scissors-emoji":
+          if (compPick.name === "scissors-emoji") {
             gameInfo.tie++;
+            display_score();
+
             break;
-          } else if (compPick === "paper-emoji") {
+          } else if (compPick.name === "paper-emoji") {
             gameInfo.win++;
+            display_score();
+
             break;
           } else {
             gameInfo.lose++;
+            display_score();
+
             break;
           }
 
         case "paper-emoji":
-          if (compPick === "paper-emoji") {
+          if (compPick.name === "paper-emoji") {
             gameInfo.tie++;
             display_score();
             break;
-          } else if (compPick === "scissor-emoji") {
-            gameInfo.win++;
+          } else if (compPick.name === "scissors-emoji") {
+            gameInfo.lose++;
             display_score();
             break;
           } else {
-            gameInfo.lose++;
+            gameInfo.win++;
+
             display_score();
             break;
           }
@@ -99,6 +116,15 @@ function display_score() {
   console.log(
     `Wins: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`
   );
+  winResults.innerHTML = `
+  <div class="results-container">
+    <span>Computer Pick:</span> 
+    <img src="./imgs/${compPick.name}.png" class="resultsEmoji" alt="${compPick.name}">
+    <span> | Your Pick:</span> 
+    <img src="./imgs/${userPick}.png" class="resultsEmoji" alt="${userPick}">
+  </div>
+  <div>Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}</div>`;
+  document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
 }
 
 function getCompPick() {
