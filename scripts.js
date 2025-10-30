@@ -32,9 +32,12 @@ function getName() {
       btn.addEventListener("click", () => {
         if (gameInfo.username === null && btn.value === "Username") {
           loginUser();
-        }
-        if ((gameInfo.username.length = 1)) {
+        } else if (btn.value === "Guest") {
+          gameInfo = gameInfoTemplate;
+          hidePopUp();
+        } else if ((gameInfo.username.length = 1)) {
           display_score();
+          hidePopUp();
           isLoggedIn = true;
         } else {
           //   alert("Enter a valid username or continue as a guest.");
@@ -56,6 +59,7 @@ function getName() {
 
 function loginUser() {
   gameInfo.username = nameInputField.value.trim();
+  nameInputField.value = "";
   console.log(gameInfo);
   localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
   isLoggedIn = true;
@@ -65,6 +69,7 @@ function loginUser() {
 
 function hidePopUp() {
   welcomePopupMessage.style.visibility = "hidden";
+  resetUserBtn.style.visibility = "visible";
 
   if (gameInfo.username !== null) {
     if (gameInfo.username.length >= 1) {
@@ -77,15 +82,26 @@ function hidePopUp() {
 
 function logUserOut() {
   resetUserBtn.addEventListener("click", () => {
-    reset_score();
-    localStorage.clear();
-    isLoggedIn = false;
-    welcomeName.innerHTML = `Welcome!`;
-    resetUserBtn.style.visibility = "hidden";
-    gameInfo = gameInfoTemplate;
-    welcomePopupMessage.style.visibility = "visible";
-    getName();
+    resetUserData();
+    gameInfo = { win: 0, lose: 0, tie: 0 };
+    display_score();
   });
+}
+function resetUserData() {
+  localStorage.clear();
+  isLoggedIn = false;
+  welcomeName.innerHTML = `Welcome!`;
+  resetUserBtn.style.visibility = "hidden";
+  gameInfo = gameInfoTemplate;
+  welcomePopupMessage.style.visibility = "visible";
+  gameInfo = { win: 0, lose: 0, tie: 0 };
+
+  getName();
+}
+function clearGuestOnRefresh() {
+  if (gameInfo.username === null) {
+    resetUserData();
+  }
 }
 
 function pickEmoji() {
@@ -190,17 +206,18 @@ function getCompPick() {
   localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
 }
 
-function reset_score() {
+function resetScoreBtns() {
   btn = resetBtn.addEventListener("click", () => {
     gameInfo.win = 0;
     gameInfo.lose = 0;
     gameInfo.tie = 0;
+
     display_score();
   });
 }
-
+clearGuestOnRefresh();
 getName();
 pickEmoji();
 display_score();
-reset_score();
+resetScoreBtns();
 logUserOut();
