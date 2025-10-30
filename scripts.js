@@ -4,6 +4,7 @@ const winResults = document.getElementById("winResults");
 const nameInputField = document.getElementById("welcome-prompt");
 let resultCnt = null;
 const welcomeName = document.getElementById("welcomeTxt");
+const resetUserBtn = document.getElementById("clearUserBtn");
 let userPick = null;
 const emojiOptions = {
   1: { name: "rock-emoji", symbol: "👊" },
@@ -20,14 +21,16 @@ function getName() {
   if (localStorage.length === 0) {
     welcomePopupMessage.style.visibility = "visible";
     const promptBtn = document.getElementsByClassName("promptBtn");
+    nameInputField.addEventListener("keydown", (event) => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        loginUser();
+      }
+    });
     for (const btn of promptBtn) {
       btn.addEventListener("click", () => {
-        if (gameInfo.username === null && btn.value === "Username")
-          gameInfo.username = nameInputField.value.trim();
-        console.log(gameInfo);
-        localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
-        isLoggedIn = true;
-        hidePopUp();
+        if (gameInfo.username === null && btn.value === "Username") {
+          loginUser();
+        }
         if ((gameInfo.username.length = 1)) {
           display_score();
           isLoggedIn = true;
@@ -49,6 +52,14 @@ function getName() {
   }
 }
 
+function loginUser() {
+  gameInfo.username = nameInputField.value.trim();
+  console.log(gameInfo);
+  localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
+  isLoggedIn = true;
+  hidePopUp();
+}
+
 function hidePopUp() {
   welcomePopupMessage.style.visibility = "hidden";
 
@@ -59,6 +70,16 @@ function hidePopUp() {
     }
   } else {
   }
+}
+
+function logUserOut() {
+  resetUserBtn.addEventListener("click", () => {
+    reset_score();
+    localStorage.clear();
+
+    welcomePopupMessage.style.visibility = "visible";
+    getName();
+  });
 }
 
 function pickEmoji() {
@@ -176,3 +197,4 @@ getName();
 pickEmoji();
 display_score();
 reset_score();
+logUserOut();
