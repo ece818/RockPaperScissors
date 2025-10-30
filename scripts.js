@@ -11,22 +11,23 @@ const emojiOptions = {
 };
 let gameInfo = { username: null, win: 0, lose: 0, tie: 0 };
 let compPick = null;
+const resetBtn = document.getElementById("resetBtn");
 function getName() {
   if (localStorage.length === 0) {
     welcomePopupMessage.style.visibility = "visible";
     const promptBtn = document.getElementsByClassName("promptBtn");
     for (const btn of promptBtn) {
       btn.addEventListener("click", () => {
-        if (btn.value === "Username")
-          if ((gameInfo.username.length = 1)) {
-            gameInfo.username = nameInputField.value.trim();
-            console.log(gameInfo);
-            localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
-            hidePopUp();
-          } else {
-            alert("Enter a valid username or continue as a guest.");
-          }
-        else {
+        if (gameInfo.username === null && btn.value === "Username")
+          gameInfo.username = nameInputField.value.trim();
+        console.log(gameInfo);
+        localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
+        hidePopUp();
+        if ((gameInfo.username.length = 1)) {
+          display_score();
+        } else {
+          alert("Enter a valid username or continue as a guest.");
+
           hidePopUp();
         }
       });
@@ -38,13 +39,18 @@ function getName() {
     gameInfo = savedData;
     console.log("Loaded saved user:", gameInfo);
     hidePopUp();
+    display_score();
   }
 }
 
 function hidePopUp() {
   welcomePopupMessage.style.visibility = "hidden";
-  if (gameInfo.username.length >= 1) {
-    welcomeName.textContent = `Welcome ${gameInfo.username}`;
+
+  if (gameInfo.username !== null) {
+    if (gameInfo.username.length >= 1) {
+      welcomeName.innerHTML = `Welcome <br>${gameInfo.username}`;
+    }
+  } else {
   }
 }
 
@@ -116,7 +122,8 @@ function display_score() {
   console.log(
     `Wins: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`
   );
-  winResults.innerHTML = `
+  if (userPick && compPick) {
+    winResults.innerHTML = `
   <div class="results-container">
     <span>Computer Pick:</span> 
     <img src="./imgs/${compPick.name}.png" class="resultsEmoji" alt="${compPick.name}">
@@ -124,7 +131,14 @@ function display_score() {
     <img src="./imgs/${userPick}.png" class="resultsEmoji" alt="${userPick}">
   </div>
   <div>Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}</div>`;
-  document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
+    document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
+    localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
+  } else {
+    winResults.innerHTML = `
+  <div>Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}</div>`;
+    document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
+    localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
+  }
 }
 
 function getCompPick() {
@@ -132,7 +146,24 @@ function getCompPick() {
   let newCompPick = emojiOptions[ranNum];
   console.log(compPick);
   compPick = newCompPick;
+  winResults.innerHTML = `
+  <div class="results-container">
+   
+  <div>Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}</div>`;
+  document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
+  localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
+}
+
+function reset_score() {
+  btn = resetBtn.addEventListener("click", () => {
+    gameInfo.win = 0;
+    gameInfo.lose = 0;
+    gameInfo.tie = 0;
+    display_score();
+  });
 }
 
 getName();
 pickEmoji();
+display_score();
+reset_score();

@@ -85,7 +85,7 @@ body {
 
 .emojiIcon {
   display: inline-block;
-  width: 140px; /* reduced size so they sit closer */
+  width: 140px;
   height: 140px;
   padding: 16px; /* no negative values */
   margin: 12px; /* smaller gap between icons */
@@ -95,6 +95,18 @@ body {
   border-color: white;
   background-color: transparent;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 600px) {
+  .emojiIcon {
+    width: 100px;
+    height: 100px;
+    margin: 7px;
+  }
+
+  #welcomeText {
+    font-size: medium;
+  }
 }
 
 .emojiIcon img {
