@@ -4,26 +4,10 @@ body {
   place-items: center;
 
   margin: 0;
-
   text-align: center;
   color: white;
 }
-.promptBtn:hover {
-  background-color: rgb(140, 140, 140);
-}
 
-.promptBtn:active {
-  background-color: rgb(115, 115, 115);
-}
-
-#welcome-prompt-container button {
-  width: 10rem;
-  height: 3rem;
-  font-size: 1.3rem;
-  margin: 5px 20px;
-  padding: 10px 10px;
-  display: inline-block;
-}
 .resultsEmoji {
   width: 45px;
   height: 45px;
@@ -73,14 +57,14 @@ body {
 #welcomeTxt {
   color: white;
   font-size: 5rem;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 }
 #optionTxt {
   color: white;
-  font-size: 3rem;
+  font-size: 2rem;
   margin: auto;
-  padding-top: 10px;
-  padding-bottom: 50px;
+  padding-top: 0;
+  padding-bottom: 25px;
 }
 
 .emojiIcon {
@@ -99,11 +83,24 @@ body {
 
 @media screen and (max-width: 600px) {
   .emojiIcon {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     margin: 7px;
   }
-
+  #welcomeTxt {
+    color: white;
+    font-size: 2rem;
+    /* padding-bottom: 10px; */
+  }
+  .results-container {
+    font-size: 1.5rem;
+  }
+  .resultsEmoji {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    vertical-align: middle;
+  }
   #welcomeText {
     font-size: medium;
   }
@@ -119,7 +116,27 @@ body {
   margin-top: -8px; /* pull results up closer to the emojis (use margin, not padding) */
   padding: 0;
 }
+.promptBtn:hover {
+  background-color: rgb(140, 140, 140);
+}
 
+.promptBtn:active {
+  background-color: rgb(115, 115, 115);
+}
+
+.standardBtn {
+  border: none;
+  border-radius: 10px;
+  height: 45px;
+  width: 95px;
+  padding: auto;
+  margin: auto;
+  margin-bottom: 25px;
+}
+#resetBtn {
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
 #results-header {
   font-size: 2.75rem;
   margin: 0; /* remove invalid negative padding */

@@ -2,6 +2,7 @@ const welcomePopupMessage = document.getElementById("welcome-prompt-container");
 // const namSubBtn = document.getElementById("nameSubBtn");
 const winResults = document.getElementById("winResults");
 const nameInputField = document.getElementById("welcome-prompt");
+let resultCnt = null;
 const welcomeName = document.getElementById("welcomeTxt");
 let userPick = null;
 const emojiOptions = {
@@ -9,9 +10,12 @@ const emojiOptions = {
   2: { name: "paper-emoji", symbol: "🖐️" },
   3: { name: "scissors-emoji", symbol: "✌️" },
 };
+//#region Declared Variables
 let gameInfo = { username: null, win: 0, lose: 0, tie: 0 };
+let isLoggedIn = false;
 let compPick = null;
 const resetBtn = document.getElementById("resetBtn");
+//#endregion
 function getName() {
   if (localStorage.length === 0) {
     welcomePopupMessage.style.visibility = "visible";
@@ -22,11 +26,13 @@ function getName() {
           gameInfo.username = nameInputField.value.trim();
         console.log(gameInfo);
         localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
+        isLoggedIn = true;
         hidePopUp();
         if ((gameInfo.username.length = 1)) {
           display_score();
+          isLoggedIn = true;
         } else {
-          alert("Enter a valid username or continue as a guest.");
+          //   alert("Enter a valid username or continue as a guest.");
 
           hidePopUp();
         }
@@ -48,7 +54,8 @@ function hidePopUp() {
 
   if (gameInfo.username !== null) {
     if (gameInfo.username.length >= 1) {
-      welcomeName.innerHTML = `Welcome <br>${gameInfo.username}`;
+      welcomeName.innerHTML = `Welcome ${gameInfo.username}!`;
+      welcomeName.style.fontSize = "3rem";
     }
   } else {
   }
@@ -124,13 +131,14 @@ function display_score() {
   );
   if (userPick && compPick) {
     winResults.innerHTML = `
-  <div class="results-container">
+  <div class="results-container" id="results-container">
     <span>Computer Pick:</span> 
     <img src="./imgs/${compPick.name}.png" class="resultsEmoji" alt="${compPick.name}">
     <span> | Your Pick:</span> 
     <img src="./imgs/${userPick}.png" class="resultsEmoji" alt="${userPick}">
   </div>
   <div>Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}</div>`;
+    resultCnt = document.getElementById("results-container");
     document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
     localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
   } else {
@@ -151,6 +159,7 @@ function getCompPick() {
    
   <div>Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}</div>`;
   document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
+
   localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
 }
 
