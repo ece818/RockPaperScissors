@@ -13,6 +13,8 @@ const emojiOptions = {
 };
 //#region Declared Variables
 let gameInfo = { username: null, win: 0, lose: 0, tie: 0 };
+let gameInfoTemplate = { username: null, win: 0, lose: 0, tie: 0 };
+
 let isLoggedIn = false;
 let compPick = null;
 const resetBtn = document.getElementById("resetBtn");
@@ -37,7 +39,7 @@ function getName() {
         } else {
           //   alert("Enter a valid username or continue as a guest.");
 
-          hidePopUp();
+          loginUser();
         }
       });
     }
@@ -57,6 +59,7 @@ function loginUser() {
   console.log(gameInfo);
   localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
   isLoggedIn = true;
+  resetUserBtn.style.visibility = "visible";
   hidePopUp();
 }
 
@@ -76,7 +79,10 @@ function logUserOut() {
   resetUserBtn.addEventListener("click", () => {
     reset_score();
     localStorage.clear();
-
+    isLoggedIn = false;
+    welcomeName.innerHTML = `Welcome!`;
+    resetUserBtn.style.visibility = "hidden";
+    gameInfo = gameInfoTemplate;
     welcomePopupMessage.style.visibility = "visible";
     getName();
   });
