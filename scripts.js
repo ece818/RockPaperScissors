@@ -5,6 +5,7 @@ const nameInputField = document.getElementById("welcome-prompt");
 let resultCnt = null;
 const welcomeName = document.getElementById("welcomeTxt");
 const resetUserBtn = document.getElementById("clearUserBtn");
+const switchUserBtn = document.getElementById("switchUserBtn");
 let userPick = null;
 const emojiOptions = {
   1: { name: "rock-emoji", symbol: "👊" },
@@ -28,12 +29,28 @@ function getName() {
         loginUser();
       }
     });
+
+    const nameSubBtn = document.getElementById("nameSubBtn");
+    nameSubBtn.addEventListener("mouseover", () => {
+      if (nameInputField.value.length === 0) {
+        // nameSubBtn.innerText = "Enter a Username";
+        // nameSubBtn.style.cursor = "not-allowed";
+      }
+    });
+    nameSubBtn.addEventListener("mouseout", () => {
+      //   nameSubBtn.innerText = "Submit";
+    });
+
     for (const btn of promptBtn) {
       btn.addEventListener("click", () => {
         if (gameInfo.username === null && btn.value === "Username") {
           loginUser();
         } else if (btn.value === "Guest") {
           gameInfo = gameInfoTemplate;
+          hidePopUp();
+        } else if (nameInputField.value === "") {
+          gameInfo = gameInfoTemplate;
+
           hidePopUp();
         } else if ((gameInfo.username.length = 1)) {
           display_score();
@@ -84,6 +101,7 @@ function logUserOut() {
   resetUserBtn.addEventListener("click", () => {
     resetUserData();
     gameInfo = { win: 0, lose: 0, tie: 0 };
+    compPick = null;
     display_score();
   });
 }
@@ -211,10 +229,12 @@ function resetScoreBtns() {
     gameInfo.win = 0;
     gameInfo.lose = 0;
     gameInfo.tie = 0;
+    compPick = null;
 
     display_score();
   });
 }
+
 clearGuestOnRefresh();
 getName();
 pickEmoji();
