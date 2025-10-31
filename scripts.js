@@ -74,16 +74,6 @@ function getName() {
   }
 }
 
-function loginUser() {
-  gameInfo.username = nameInputField.value.trim();
-  nameInputField.value = "";
-  console.log(gameInfo);
-  localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
-  isLoggedIn = true;
-  resetUserBtn.style.visibility = "visible";
-  hidePopUp();
-}
-
 function hidePopUp() {
   welcomePopupMessage.style.visibility = "hidden";
   resetUserBtn.style.visibility = "visible";
@@ -208,6 +198,15 @@ function display_score() {
     document.title = `Win: ${gameInfo.win} | Lose: ${gameInfo.lose} | Tie: ${gameInfo.tie}`;
     localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
   }
+}
+function loginUser() {
+  gameInfo.username = nameInputField.value.trim();
+  nameInputField.value = "";
+  console.log(gameInfo);
+  localStorage.setItem("gameInfo", JSON.stringify(gameInfo));
+  isLoggedIn = true;
+  resetUserBtn.style.visibility = "visible";
+  hidePopUp();
 }
 
 function getCompPick() {
